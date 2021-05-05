@@ -2,7 +2,7 @@
 //The challenge is to have a nice graphical representation: a stem and a fan of leaf lines
 //The stem goes vertically, the highest point being screen coordinates x and y.
 //The leaf lines sprout from x,y, the length and direction being coded as PVector.
-//The duration of the activity determines the number of leafe lines (60*hours + minutes) / 20)
+//The duration of the activity determines the number of leaf lines (60*hours + minutes) / 20)
 
 class Activity {
       String title;             //data
@@ -33,7 +33,7 @@ class Activity {
            //make a nice fan of leaf lines
            int branches = (60*hours + minutes) / 20;//number of leaf lines
            float dphi = radians(2);                 //rotational spacing is 2 degrees
-           float phi = -(branches / 2) * dphi;      //initial angle phi so the fan is symetric
+           float phi = -(branches / 2) * dphi;      //initial angle phi chosen to make fan symmetric
            for (int i = 0; i < branches; i++){
  
                 float len = 150;                    //initial idea: all leaf lines equally long
@@ -48,7 +48,7 @@ class Activity {
       }
       boolean collides(Activity b){
               //find out whether some of this's lines intersect some of b's lines
-              //use the "intersects" routine as proposed by Paul Bourke
+              //use the "intersects" routine as proposed by Paul Bourke.
               //Test ALL lines of this against all lines of b.
               //First test test this' leaf lines against b's leaf lines,
               //then this' stem against b's leaf lines,
@@ -66,6 +66,22 @@ class Activity {
               }
               return aha;
       }
+      void stitch(){
+           //like draw, but avoids jumps, no text,
+           //convert by Illustrator to .svg(1.0), 
+           //Then use Brother PEDesign
+           noFill();
+           stroke(clr);
+           beginShape();
+           vertex(x,y);
+           vertex(x,height);
+           vertex(x,y);
+           for (PVector l : lines){   
+                vertex(x + l.x,y + l.y);
+                vertex(x,y);
+           }
+           endShape();
+      }
       void draw(){
            //put it on screen
            stroke(clr);
@@ -74,7 +90,7 @@ class Activity {
            for (PVector l : lines){    //loop through its leaf lines
                 strokeWeight(1 + random(1));                              //simulate pen variation
                 //line(x,y,x + l.x,y + l.y);                              //this would be technically correct
-                line(x + random(-2,2),y + random(-2,2),x + l.x,y + l.y);  //but we add some aestetic noise
+                line(x + random(-2,2),y + random(-2,2),x + l.x,y + l.y);  //but we add some aesthetic noise
            }
            fill(clr);
            textSize(16); 

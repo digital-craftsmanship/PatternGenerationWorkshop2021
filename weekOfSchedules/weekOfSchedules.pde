@@ -4,7 +4,7 @@
 //Code (c) Loe Feijs 2021 for course Digital Craftsmanship
 
 import processing.pdf.*;
-String fileName = "week15";
+String fileName = "week14";
 ArrayList<Activity> activities = new ArrayList<Activity>();
 
 void setup(){
